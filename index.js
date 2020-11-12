@@ -12,6 +12,11 @@ app.get('/', (req, res) => {
   res.end('<h1>Home page</h1>')
 })
 
+app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
+    // const name = req.body.name
+    console.log(req);
+})
+
 app.listen(PORT, () => {
   console.log('Server started')
 })
@@ -20,7 +25,7 @@ const binance = new Binance().options({
   APIKEY: config.apikey,
   APISECRET: config.apisecret
 });
-
+// jsonfile.writeFileSync("websoketData.txt", json, { flag: 'a' })
 
 const closeAll = new Promise((resolve, reject) => {
   const pos = binance.futures.positionRisk()
