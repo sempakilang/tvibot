@@ -12,7 +12,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "test": "node test"
   },
   "author": "themd",
   "license": "ISC"

@@ -49,8 +49,8 @@ app.listen(PORT, () => {
 })
 
 const binance = new Binance().options({
-  APIKEY: config.apikey,
-  APISECRET: config.apisecret
+  APIKEY: process.env.APIKEY,
+  APISECRET: process.env.APISECRET
 })
 const leverage = 10
 
