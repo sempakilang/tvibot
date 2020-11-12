@@ -2,6 +2,7 @@ const config = require('./config/default.json')
 // const Binance = require('node-binance-api')
 const Binance = require('node-binance-api-ext')
 const express = require('express')
+const bodyParser = require('body-parser');
 const jsonfile = require('jsonfile')
 
 const app = express()
