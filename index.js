@@ -13,6 +13,26 @@ app.get('/', (req, res) => {
   res.end('<h1>Home page</h1>')
 })
 
+app.get('/u6fqR4Q89q058hm75VR9', (req, res) => {
+  res.status(200).end(` <div><a href="/u6fqR4Q89q058hm75VR9buy">buy</a></div>
+            <div><a href="/u6fqR4Q89q058hm75VR9sell">sell</a></div>
+            <div><a href="/u6fqR4Q89q058hm75VR9stop">stop</a></div>
+    `)
+})
+app.get('/u6fqR4Q89q058hm75VR9buy', (req, res) => {
+  buyAsyncBTC()
+  res.status(200).end('<div><a href="/u6fqR4Q89q058hm75VR9">back</a></div>')
+})
+app.get('/u6fqR4Q89q058hm75VR9sell', (req, res) => {
+  sellAsyncBTC()
+  res.status(200).end('<div><a href="/u6fqR4Q89q058hm75VR9">back</a></div>')
+})
+})
+app.get('/u6fqR4Q89q058hm75VR9stop', (req, res) => {
+  stopAll()
+  res.status(200).end('<div><a href="/u6fqR4Q89q058hm75VR9">back</a></div>')
+})
+
 app.use(bodyParser.json())
 app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
   console.log("req:", req.body);
@@ -53,6 +73,16 @@ const closeAll = new Promise((resolve, reject) => {
 }).finally(() => {
   console.log('сделки закрыты');
 })
+
+async function stopAll() {
+  try {
+    await closeAll
+  } catch (e) {
+    console.error(e);
+  } finally {
+    console.log('position closed');
+  }
+}
 
 async function buyAsyncBTC() {
   try {
