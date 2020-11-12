@@ -12,9 +12,14 @@ app.get('/', (req, res) => {
   res.end('<h1>Home page</h1>')
 })
 
-app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
-    // const name = req.body.name
-    console.log(req);
+// app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
+//     // const name = req.body.name
+//     console.log(req);
+// })
+
+app.get('/7BxCeBZrp8', (req, res) => {
+  console.log("req:", req);
+  console.log("res:", res);
 })
 
 app.listen(PORT, () => {
