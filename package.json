@@ -1,0 +1,19 @@
+{
+  "name": "twibot",
+  "version": "1.0.0",
+  "description": "traderview indicator bot",
+  "main": "index.js",
+  "dependencies": {
+    "config": "^3.3.2",
+    "express": "^4.17.1",
+    "jsonfile": "^6.1.0",
+    "node-binance-api": "^0.12.2",
+    "node-binance-api-ext": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index"
+  },
+  "author": "themd",
+  "license": "ISC"
+}
