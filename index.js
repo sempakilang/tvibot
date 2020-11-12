@@ -98,7 +98,8 @@ async function buyAsyncBTC() {
     const priceBTC = parseFloat(priceAll.BTCUSDT)
 
     //считаем на сколько взять позицию
-    const sumUSDT = 20 * 80 / 100 //берем на 80% от депо 20$
+    const balance = await binance.futures.account()
+    const sumUSDT = balance.availableBalance * 80 / 100 //берем на 80% от депо $
     const countPos = (parseFloat(sumUSDT / priceBTC * leverage)).toFixed(3)
 
     //встаем в позицию
@@ -143,8 +144,8 @@ async function sellAsyncBTC() {
     const priceBTC = parseFloat(priceAll.BTCUSDT)
 
     //считаем на сколько взять позицию
-    const leverage = 10
-    const sumUSDT = 20 * 80 / 100 //берем на 80% от депо 20$
+    const balance = await binance.futures.account()
+    const sumUSDT = balance.availableBalance * 80 / 100 //берем на 80% от депо $
     const countPos = (parseFloat(sumUSDT / priceBTC * leverage)).toFixed(3)
 
     //встаем в позицию
