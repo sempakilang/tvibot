@@ -15,11 +15,12 @@ app.get('/', (req, res) => {
 // app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
 //     // const name = req.body.name
 //     console.log(req);
+// res.end('')
 // })
 
 app.get('/7BxCeBZrp8', (req, res) => {
   console.log("req:", req);
-  console.log("res:", res);
+  res.end('')
 })
 
 app.listen(PORT, () => {
