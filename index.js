@@ -27,7 +27,6 @@ app.get('/u6fqR4Q89q058hm75VR9sell', (req, res) => {
   sellAsyncBTC()
   res.status(200).end('<div><a href="/u6fqR4Q89q058hm75VR9">back</a></div>')
 })
-})
 app.get('/u6fqR4Q89q058hm75VR9stop', (req, res) => {
   stopAll()
   res.status(200).end('<div><a href="/u6fqR4Q89q058hm75VR9">back</a></div>')
