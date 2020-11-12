@@ -12,9 +12,10 @@ app.get('/', (req, res) => {
   res.end('<h1>Home page</h1>')
 })
 
+app.use(bodyParser.json())
 app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
-  console.log(req.body);
-  res.end('')
+  console.log("req:", req.body);
+  res.status(200).end()
 })
 
 app.get('/7BxCeBZrp8', (req, res) => {
