@@ -28,7 +28,7 @@ app.get('/u6fqR4Q89q058hm75VR9sell', (req, res) => {
   res.status(200).end('<div><a href="/u6fqR4Q89q058hm75VR9">back</a></div>')
 })
 app.get('/u6fqR4Q89q058hm75VR9stop', (req, res) => {
-  stopAll()
+  stopBTC()
   res.status(200).end('<div><a href="/u6fqR4Q89q058hm75VR9">back</a></div>')
 })
 
@@ -52,31 +52,34 @@ const binance = new Binance().options({
   APIKEY: config.apikey,
   APISECRET: config.apisecret
 })
+const leverage = 10
 
-const closeAll = new Promise((resolve, reject) => {
-  const pos = binance.futures.positionRisk()
-  resolve(pos)
-}).then(pos => {
-  const posData = pos.filter(item => item.symbol == 'BTCUSDT')
-  const positionAmt = parseFloat(posData[0].positionAmt)
-  //закрываем позицию long/short
-  if (positionAmt > 0) {
-    binance.futures.marketSell('BTCUSDT', positionAmt)
-  } else if (positionAmt < 0) {
-    binance.futures.marketBuy('BTCUSDT', positionAmt * -1)
-  } else {
-    console.log('сделок нет');
+async function closeAll() {
+  try {
+    const pos = await binance.futures.positionRisk()
+    const posData = pos.filter(item => item.symbol == 'BTCUSDT')
+    const positionAmt = parseFloat(posData[0].positionAmt)
+    //закрываем позицию long/short
+    if (positionAmt > 0) {
+      binance.futures.marketSell('BTCUSDT', positionAmt)
+    } else if (positionAmt < 0) {
+      binance.futures.marketBuy('BTCUSDT', positionAmt * -1)
+    } else {
+      console.log('сделок нет');
+    }
+    //закрываем ордера
+    binance.futures.cancelAll('BTCUSDT')
+  } catch (e) {
+    console.error(e);
+  } finally {
+    console.log('сделки закрыты');
   }
-  //закрываем ордера
-  binance.futures.cancelAll('BTCUSDT')
-}).finally(() => {
-  console.log('сделки закрыты');
-})
+}
 
-async function stopAll() {
+async function stopBTC() {
   try {
     await closeAll
-    await binance.futures.leverage('BTCUSDT', 10)
+    await binance.futures.leverage('BTCUSDT', leverage)
   } catch (e) {
     console.error(e);
   } finally {
@@ -95,7 +98,6 @@ async function buyAsyncBTC() {
     const priceBTC = parseFloat(priceAll.BTCUSDT)
 
     //считаем на сколько взять позицию
-    const leverage = 10
     const sumUSDT = 20 * 80 / 100 //берем на 80% от депо 20$
     const countPos = (parseFloat(sumUSDT / priceBTC * leverage)).toFixed(3)
 
