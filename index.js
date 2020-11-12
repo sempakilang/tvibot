@@ -76,6 +76,7 @@ const closeAll = new Promise((resolve, reject) => {
 async function stopAll() {
   try {
     await closeAll
+    await binance.futures.leverage('BTCUSDT', 10)
   } catch (e) {
     console.error(e);
   } finally {
@@ -94,7 +95,7 @@ async function buyAsyncBTC() {
     const priceBTC = parseFloat(priceAll.BTCUSDT)
 
     //считаем на сколько взять позицию
-    const leverage = 5
+    const leverage = 10
     const sumUSDT = 20 * 80 / 100 //берем на 80% от депо 20$
     const countPos = (parseFloat(sumUSDT / priceBTC * leverage)).toFixed(3)
 
@@ -118,7 +119,8 @@ async function buyAsyncBTC() {
     await binance.futures.stopMarketSell('BTCUSDT', (positionAmt).toFixed(3), (entryPrice-(entryPrice * (0.1 / leverage))).toFixed(0) )
 
     //Limits (40%-5% / 30%-10% / 20%-30% / 10%-50%)
-    await binance.futures.sell('BTCUSDT', (positionAmt).toFixed(3), (entryPrice+(entryPrice * (0.05 / leverage))).toFixed(0) )
+    await binance.futures.sell('BTCUSDT', (positionAmt * 0.5).toFixed(3), (entryPrice+(entryPrice * (0.05 / leverage))).toFixed(0) )
+    await binance.futures.sell('BTCUSDT', (positionAmt * 0.5).toFixed(3), (entryPrice+(entryPrice * (0.1 / leverage))).toFixed(0) )
     // await binance.futures.sell('BTCUSDT', countPos1 * 0.4, priceBTC1 * 1.05)
     // await binance.futures.sell('BTCUSDT', countPos1 * 0.3, priceBTC1 * 1.1)
     // await binance.futures.sell('BTCUSDT', countPos1 * 0.2, priceBTC1 * 1.3)
@@ -143,7 +145,7 @@ async function sellAsyncBTC() {
     const priceBTC = parseFloat(priceAll.BTCUSDT)
 
     //считаем на сколько взять позицию
-    const leverage = 5
+    const leverage = 10
     const sumUSDT = 20 * 80 / 100 //берем на 80% от депо 20$
     const countPos = (parseFloat(sumUSDT / priceBTC * leverage)).toFixed(3)
 
@@ -167,7 +169,8 @@ async function sellAsyncBTC() {
     await binance.futures.stopMarketBuy('BTCUSDT', (positionAmt).toFixed(3), (entryPrice+(entryPrice * (0.1 / leverage))).toFixed(0) )
 
     //Limits (40%-5% / 30%-10% / 20%-30% / 10%-50%)
-    await binance.futures.buy('BTCUSDT', (positionAmt).toFixed(3), (entryPrice-(entryPrice * (0.05 / leverage))).toFixed(0) )
+    await binance.futures.buy('BTCUSDT', (positionAmt * 0.5).toFixed(3), (entryPrice-(entryPrice * (0.05 / leverage))).toFixed(0) )
+    await binance.futures.buy('BTCUSDT', (positionAmt * 0.5).toFixed(3), (entryPrice-(entryPrice * (0.1 / leverage))).toFixed(0) )
     // await binance.futures.sell('BTCUSDT', countPos1 * 0.4, priceBTC1 * 1.05)
     // await binance.futures.sell('BTCUSDT', countPos1 * 0.3, priceBTC1 * 1.1)
     // await binance.futures.sell('BTCUSDT', countPos1 * 0.2, priceBTC1 * 1.3)
