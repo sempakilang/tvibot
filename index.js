@@ -4,6 +4,14 @@ const Binance = require('node-binance-api-ext')
 const express = require('express')
 const jsonfile = require('jsonfile')
 
+const app = express()
+
+const PORT = process.env.PORT || 80
+
+app.listen(PORT, () => {
+  console.log('Server started')
+})
+
 const binance = new Binance().options({
   APIKEY: config.apikey,
   APISECRET: config.apisecret
