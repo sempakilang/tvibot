@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 // })
 
 app.get('/7BxCeBZrp8', (req, res) => {
-  console.log("req:", req);
+  console.log("req:", req.body);
   res.end('')
 })
 
