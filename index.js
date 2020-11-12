@@ -121,10 +121,6 @@ async function buyAsyncBTC() {
     //Limits (40%-5% / 30%-10% / 20%-30% / 10%-50%)
     await binance.futures.sell('BTCUSDT', (positionAmt * 0.5).toFixed(3), (entryPrice+(entryPrice * (0.05 / leverage))).toFixed(0) )
     await binance.futures.sell('BTCUSDT', (positionAmt * 0.5).toFixed(3), (entryPrice+(entryPrice * (0.1 / leverage))).toFixed(0) )
-    // await binance.futures.sell('BTCUSDT', countPos1 * 0.4, priceBTC1 * 1.05)
-    // await binance.futures.sell('BTCUSDT', countPos1 * 0.3, priceBTC1 * 1.1)
-    // await binance.futures.sell('BTCUSDT', countPos1 * 0.2, priceBTC1 * 1.3)
-    // await binance.futures.sell('BTCUSDT', countPos1 * 0.1, priceBTC1 * 1.5)
 
   } catch (e) {
     console.error(e);
@@ -171,10 +167,6 @@ async function sellAsyncBTC() {
     //Limits (40%-5% / 30%-10% / 20%-30% / 10%-50%)
     await binance.futures.buy('BTCUSDT', (positionAmt * 0.5).toFixed(3), (entryPrice-(entryPrice * (0.05 / leverage))).toFixed(0) )
     await binance.futures.buy('BTCUSDT', (positionAmt * 0.5).toFixed(3), (entryPrice-(entryPrice * (0.1 / leverage))).toFixed(0) )
-    // await binance.futures.sell('BTCUSDT', countPos1 * 0.4, priceBTC1 * 1.05)
-    // await binance.futures.sell('BTCUSDT', countPos1 * 0.3, priceBTC1 * 1.1)
-    // await binance.futures.sell('BTCUSDT', countPos1 * 0.2, priceBTC1 * 1.3)
-    // await binance.futures.sell('BTCUSDT', countPos1 * 0.1, priceBTC1 * 1.5)
 
   } catch (e) {
     console.error(e);
