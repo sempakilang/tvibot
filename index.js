@@ -16,12 +16,13 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json())
 app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
   console.log("req:", req.body);
+  jsonfile.writeFileSync("websoketData.txt", req.body, { flag: 'a' })
+  if (req.body.signal == 'long') {
+    buyAsyncBTC()
+  } else if (req.body.signal == 'short') {
+    sellAsyncBTC()
+  }
   res.status(200).end()
-})
-
-app.get('/7BxCeBZrp8', (req, res) => {
-  console.log("req:", req.body);
-  res.end('')
 })
 
 app.listen(PORT, () => {
@@ -31,8 +32,7 @@ app.listen(PORT, () => {
 const binance = new Binance().options({
   APIKEY: config.apikey,
   APISECRET: config.apisecret
-});
-// jsonfile.writeFileSync("websoketData.txt", json, { flag: 'a' })
+})
 
 const closeAll = new Promise((resolve, reject) => {
   const pos = binance.futures.positionRisk()
