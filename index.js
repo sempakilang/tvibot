@@ -11,10 +11,6 @@ const PORT = process.env.PORT || 80
 
 const bot = new TelegramBot(process.env.TGTOKEN, {polling: true});
 
-bot.on('message', msg => {
-  bot.sendMessage(msg.chat.id, `Hello from ME, bot "Hi, ${msg.from.first_name}"`)
-})
-
 app.get('/', (req, res) => {
   res.end('<h1>Home page</h1>')
 })
@@ -38,6 +34,10 @@ app.get('/u6fqR4Q89q058hm75VR9stop', (req, res) => {
   res.status(200).end('<div><a href="/u6fqR4Q89q058hm75VR9">back</a></div>')
 })
 
+app.get('/'+process.env.TGTOKEN, (req, res) => {
+  res.status(200).end('<div>тест</div>')
+})
+
 app.use(bodyParser.json())
 app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
   console.log("req:", req.body);
@@ -53,6 +53,15 @@ app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
 app.listen(PORT, () => {
   console.log('Server started')
 })
+
+
+bot.on('message', msg => {
+  bot.sendMessage(msg.chat.id, `Hello from ME, bot "Hi, ${msg.from.first_name}"`)
+})
+
+async function sendMSG(msg) {
+  console.log('123');
+}
 
 const binance = new Binance().options({
   APIKEY: process.env.APIKEY,
@@ -79,7 +88,7 @@ async function closeAll() {
     console.error(e);
   } finally {
     console.log('сделки закрыты');
-    bot.sendMessage(msg.chat.id, `close all BTC`)
+    // bot.sendMessage(msg.chat.id, `close all BTC`)
   }
 }
 
@@ -91,7 +100,7 @@ async function stopBTC() {
     console.error(e);
   } finally {
     console.log('position closed');
-    bot.sendMessage(msg.chat.id, `stop BTC`)
+    // bot.sendMessage(`stop BTC`)
   }
 }
 
@@ -99,7 +108,7 @@ async function buyAsyncBTC() {
   try {
     //закрываем ордера
     await closeAll
-    bot.sendMessage(msg.chat.id, `buy BTC`)
+    // bot.sendMessage(msg.chat.id, `buy BTC`)
 
     //определить цену BTC
     const priceAll = await binance.futures.prices()
@@ -146,7 +155,7 @@ async function sellAsyncBTC() {
   try {
     //закрываем ордера
     await closeAll
-    bot.sendMessage(msg.chat.id, `sell BTC`)
+    // bot.sendMessage(msg.chat.id, `sell BTC`)
 
     //определить цену BTC
     const priceAll = await binance.futures.prices()
