@@ -79,6 +79,7 @@ async function closeAll() {
     console.error(e);
   } finally {
     console.log('сделки закрыты');
+    bot.sendMessage(msg.chat.id, `close all BTC`)
   }
 }
 
@@ -90,6 +91,7 @@ async function stopBTC() {
     console.error(e);
   } finally {
     console.log('position closed');
+    bot.sendMessage(msg.chat.id, `stop BTC`)
   }
 }
 
@@ -97,6 +99,7 @@ async function buyAsyncBTC() {
   try {
     //закрываем ордера
     await closeAll
+    bot.sendMessage(msg.chat.id, `buy BTC`)
 
     //определить цену BTC
     const priceAll = await binance.futures.prices()
@@ -143,6 +146,7 @@ async function sellAsyncBTC() {
   try {
     //закрываем ордера
     await closeAll
+    bot.sendMessage(msg.chat.id, `sell BTC`)
 
     //определить цену BTC
     const priceAll = await binance.futures.prices()
