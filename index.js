@@ -1,13 +1,19 @@
 const config = require('./config/default.json')
 // const Binance = require('node-binance-api')
+const TelegramBot = require('node-telegram-bot-api');
 const Binance = require('node-binance-api-ext')
 const express = require('express')
 const bodyParser = require('body-parser');
 const jsonfile = require('jsonfile')
 
 const app = express()
-
 const PORT = process.env.PORT || 80
+
+const bot = new TelegramBot(process.env.TGTOKEN, {polling: true});
+
+bot.on('message', msg => {
+  bot.sendMessage(msg.chat.id, `Hello from ME, bot "Hi, ${msg.from.first_name}"`)
+})
 
 app.get('/', (req, res) => {
   res.end('<h1>Home page</h1>')
@@ -35,12 +41,12 @@ app.get('/u6fqR4Q89q058hm75VR9stop', (req, res) => {
 app.use(bodyParser.json())
 app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
   console.log("req:", req.body);
-  jsonfile.writeFileSync("websoketData.txt", req.body, { flag: 'a' })
   if (req.body.signal == 'long') {
     buyAsyncBTC()
   } else if (req.body.signal == 'short') {
     sellAsyncBTC()
   }
+  jsonfile.writeFileSync("websoketData.txt", req.body, { flag: 'a' })
   res.status(200).end()
 })
 
