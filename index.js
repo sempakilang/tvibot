@@ -57,7 +57,7 @@ app.listen(PORT, () => {
 
 
 bot.on('message', msg => {
-  bot.sendMessage(msg.chat.id, `${msg.chat.id} Hello from ME, bot "Hi, ${msg.from.first_name}"`)
+  bot.sendMessage(msg.chat.id, `Hello, ${msg.from.first_name}`)
 })
 
 async function sendMSG(msg) {
@@ -89,7 +89,7 @@ async function closeAll() {
     console.error(e);
   } finally {
     console.log('сделки закрыты');
-    // bot.sendMessage(msg.chat.id, `close all BTC`)
+    bot.sendMessage(idAdmin, `close all BTC`)
   }
 }
 
@@ -109,7 +109,7 @@ async function buyAsyncBTC() {
   try {
     //закрываем ордера
     await closeAll
-    // bot.sendMessage(msg.chat.id, `buy BTC`)
+    bot.sendMessage(idAdmin, `buy BTC`)
 
     //определить цену BTC
     const priceAll = await binance.futures.prices()
@@ -156,7 +156,7 @@ async function sellAsyncBTC() {
   try {
     //закрываем ордера
     await closeAll
-    // bot.sendMessage(msg.chat.id, `sell BTC`)
+    bot.sendMessage(idAdmin, `sell BTC`)
 
     //определить цену BTC
     const priceAll = await binance.futures.prices()
