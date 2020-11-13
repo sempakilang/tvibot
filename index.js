@@ -10,6 +10,7 @@ const app = express()
 const PORT = process.env.PORT || 80
 
 const bot = new TelegramBot(process.env.TGTOKEN, {polling: true});
+const idAdmin = 121650725
 
 app.get('/', (req, res) => {
   res.end('<h1>Home page</h1>')
@@ -56,7 +57,7 @@ app.listen(PORT, () => {
 
 
 bot.on('message', msg => {
-  bot.sendMessage(msg.chat.id, `Hello from ME, bot "Hi, ${msg.from.first_name}"`)
+  bot.sendMessage(msg.chat.id, `${msg.chat.id} Hello from ME, bot "Hi, ${msg.from.first_name}"`)
 })
 
 async function sendMSG(msg) {
@@ -100,7 +101,7 @@ async function stopBTC() {
     console.error(e);
   } finally {
     console.log('position closed');
-    // bot.sendMessage(`stop BTC`)
+    bot.sendMessage(idAdmin, `stop BTC`)
   }
 }
 
