@@ -42,6 +42,7 @@ app.get('/'+process.env.TGTOKEN, (req, res) => {
 app.use(bodyParser.json())
 app.post('/5t8WO9qaGdUGQfCEfhDZ', (req, res) => {
   console.log("req:", req.body);
+  bot.sendMessage(idAdmin, req.body)
   if (req.body.signal == 'long') {
     buyAsyncBTC()
   } else if (req.body.signal == 'short') {
