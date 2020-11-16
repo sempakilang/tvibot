@@ -78,14 +78,14 @@ async function closeAll() {
     const positionAmt = parseFloat(posData[0].positionAmt)
     //закрываем позицию long/short
     if (positionAmt > 0) {
-      binance.futures.marketSell('BTCUSDT', positionAmt)
+      await binance.futures.marketSell('BTCUSDT', positionAmt)
     } else if (positionAmt < 0) {
-      binance.futures.marketBuy('BTCUSDT', positionAmt * -1)
+      await binance.futures.marketBuy('BTCUSDT', positionAmt * -1)
     } else {
       console.log('сделок нет');
     }
     //закрываем ордера
-    binance.futures.cancelAll('BTCUSDT')
+    await binance.futures.cancelAll('BTCUSDT')
   } catch (e) {
     console.error(e);
   } finally {
@@ -93,6 +93,7 @@ async function closeAll() {
     bot.sendMessage(idAdmin, `close all BTC`)
   }
 }
+
 
 async function stopBTC() {
   try {
