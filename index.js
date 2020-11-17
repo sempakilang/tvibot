@@ -71,29 +71,29 @@ const binance = new Binance().options({
 })
 const leverage = 10
 
-async function closeAll() {
-  try {
-    const pos = await binance.futures.positionRisk()
-    const posData = pos.filter(item => item.symbol == 'BTCUSDT')
+
+function closeAll() {
+  return Promise.all([
+    //закрываем ордера
+    binance.futures.cancelAll('BTCUSDT'),
+    binance.futures.positionRisk()
+  ])
+  .then(data => {
+    data[1]
+    const posData = data[1].filter(item => item.symbol == 'BTCUSDT')
     const positionAmt = parseFloat(posData[0].positionAmt)
     //закрываем позицию long/short
     if (positionAmt > 0) {
-      await binance.futures.marketSell('BTCUSDT', positionAmt)
+      binance.futures.marketSell('BTCUSDT', positionAmt)
     } else if (positionAmt < 0) {
-      await binance.futures.marketBuy('BTCUSDT', positionAmt * -1)
+      binance.futures.marketBuy('BTCUSDT', positionAmt * -1)
     } else {
       console.log('сделок нет');
     }
-    //закрываем ордера
-    await binance.futures.cancelAll('BTCUSDT')
-  } catch (e) {
-    console.error(e);
-  } finally {
-    console.log('сделки закрыты');
-    bot.sendMessage(idAdmin, `close all BTC`)
-  }
+  })
+  .catch(err => console.error('Error: ', err))
+  .finally(() => console.log('сделки закрыты'))
 }
-
 
 async function stopBTC() {
   try {
