@@ -36,7 +36,7 @@ app.get('/u6fqR4Q89q058hm75VR9stop', (req, res) => {
 })
 
 app.get('/'+process.env.TGTOKEN, (req, res) => {
-  res.status(200).end('<div>тест</div>')
+  res.status(200).end()
 })
 
 app.use(bodyParser.json())
@@ -60,10 +60,6 @@ app.listen(PORT, () => {
 bot.on('message', msg => {
   bot.sendMessage(msg.chat.id, `Hello, ${msg.from.first_name}`)
 })
-
-async function sendMSG(msg) {
-  console.log('123');
-}
 
 const binance = new Binance().options({
   APIKEY: process.env.APIKEY,
@@ -91,7 +87,7 @@ function closeAll() {
       console.log('сделок нет');
     }
   })
-  .catch(err => console.error('Error: ', err))
+  .catch(err => console.error('Ошибка: ', err))
   .finally(() => console.log('сделки закрыты'))
 }
 
@@ -100,9 +96,8 @@ async function stopBTC() {
     await closeAll
     await binance.futures.leverage('BTCUSDT', leverage)
   } catch (e) {
-    console.error(e);
+    console.error('Ошибка: ', e);
   } finally {
-    console.log('position closed');
     bot.sendMessage(idAdmin, `stop BTC`)
   }
 }
@@ -149,10 +144,9 @@ async function buyAsyncBTC() {
   } catch (e) {
     console.error(e);
   } finally {
-    console.log('position comlete');
+    console.log('лонг открыт');
   }
 }
-// buyAsyncBTC()
 
 async function sellAsyncBTC() {
   try {
@@ -196,7 +190,6 @@ async function sellAsyncBTC() {
   } catch (e) {
     console.error(e);
   } finally {
-    console.log('position comlete');
+    console.log('шорт открыт');
   }
 }
-// sellAsyncBTC()
